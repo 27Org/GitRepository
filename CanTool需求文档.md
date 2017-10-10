@@ -25,5 +25,14 @@ Web API系统，只允许注册商更改任何信息。
 上位机与CanTool装置之间的信息传送方式为：ASCLL码格式+\r
 当信息正确接收后，CanTool装置返回\r，否则返回\BEL。
 
+CanToolApp使用GUI界面对接受和发送的CAN信息进行显示。需要根据CAN信息及信号描述数据库对接收到的数据字符串进行解析，然后得到CAN信息中包含的各种CAN信号值，将此CAN信号值进一步进行计算，还原该信号所代表的物理量的信息，并显示在GUI界面上。要发送的CAN信息也采用同种方式将用户输入的物理值转换为CAN信号，并依据CAN信号描述数据库将属于同一个CANID的信号合成为字符串发送给CanTool装置。
 
-1111111111111111111111
+CAN信息中DATA最长为8个字节。每个字节有8bit共64bit信息。这里的DATA是由多个CAN信号是组成的。CAN信号的长度最小是1bit,最长64bit。CAN信号的数值与实际它所代表的物理量的值通过phy=A*x+B来计算。其中phy代表物理量的值，A为1LSB（Least Significant Bit）代表的物理值大小，也称Factor，x是CAN信号的值，B是物理量的偏移量。
+
+CAN信息Message描述数据库
+CANmessagel类型为char[32]，固定为BO_
+id类型为uint32，样例如下：100	十进制数值100转换为16进制为0x00000064，其中msb=bit31=0表示是CAN标准帧，bit10~bit0是实际的CANID值=0x013
+MessageName类型为char[32],字符串最长32字节。
+分隔符，固定为：
+DLC，类型unsignedchar,范围：0-8，表示此CAN信息的DATA长度为8byte。
+NodeNAme，类型为[32]，字符串，最长32字节,发送此信息的Node名。也是ECU名
