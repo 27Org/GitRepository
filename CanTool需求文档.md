@@ -1,4 +1,4 @@
-CanTool需求文档
+﻿CanTool需求文档
 
 2117218005 高毅
 
@@ -29,6 +29,7 @@ CanToolApp使用GUI界面对接受和发送的CAN信息进行显示。需要根�
 
 CAN信息中DATA最长为8个字节。每个字节有8bit共64bit信息。这里的DATA是由多个CAN信号是组成的。CAN信号的长度最小是1bit,最长64bit。CAN信号的数值与实际它所代表的物理量的值通过phy=A*x+B来计算。其中phy代表物理量的值，A为1LSB（Least Significant Bit）代表的物理值大小，也称Factor，x是CAN信号的值，B是物理量的偏移量。
 
+
 CAN信息Message描述数据库
 CANmessagel类型为char[32]，固定为BO_
 id类型为uint32，样例如下：100	十进制数值100转换为16进制为0x00000064，其中msb=bit31=0表示是CAN标准帧，bit10~bit0是实际的CANID值=0x013
@@ -36,3 +37,28 @@ MessageName类型为char[32],字符串最长32字节。
 分隔符，固定为：
 DLC，类型unsignedchar,范围：0-8，表示此CAN信息的DATA长度为8byte。
 NodeNAme，类型为[32]，字符串，最长32字节,发送此信息的Node名。也是ECU名
+
+CAN信息由ID、DLC、DATA构成。
+CAN信息中Id:iii ，DLC:L 0x8，Data:DD…DD，则CanToll中接收到信息为tiiiLDDDDDDDDDDODDDDD\r，CanToolApp中要将接收到的信息解析为实际的CAN信号。解析过程中需要使用CAN信息及信号描述数据库。iii:为CAN标准ID的范围0-0x7FF. L:表示数据长度DLC，范围0..8，DD:表示1字节(8bit)16进制数据,DD的数量由L的数值决定。实例如下：
+CAN信息：
+id:0x123
+DLC;0x08,
+Data:0x00,0x11,0x12,
+0x13,0x14,0x15,
+0x16,0x17
+CanTool：
+t12380011121314151617\r
+反过来，从CanToolApp向CAN总线发送信息，此命令发送一个扩展的29位CAN帧。只有控制器在命令“O1 \ r”后处于运行模式，才有效。
+实例如下：
+CanToolApp：
+T1234567F811223344556677880000\r  CanTool：
+T1234567F81122334455667788\r
+CAN：
+ID：1234567F
+DLC:8
+DATA: 11 22 33 44 55 66 77 88
+
+
+
+
+
