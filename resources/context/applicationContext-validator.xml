@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- 
+    create JSR 303 
+           默认使用方法
+    javax.validation.ValidatorFactory factory = javax.validation.Validation.buildDefaultValidatorFactory();
+	javax.validation.Validator validator = factory.getValidator();
+	validator.validate(model)
+    -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	 <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+	</bean>
+	
+	<!-- 
+	用"webBindingInitializer"作id,方便autowire到 web controllers
+	-->
+    <bean id="webBindingInitializer" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+         <property name="validator" ref="validator" />
+    </bean>
+	
+</beans>
