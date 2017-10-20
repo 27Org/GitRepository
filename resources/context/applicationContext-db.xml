@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+      http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+      http://www.springframework.org/schema/tx
+      http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+      http://www.springframework.org/schema/context 
+      http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- dataSource -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" init-method="init">
+
+		<property name="driverClassName"><value>${datasource.driverClassName}</value></property>
+		<property name="url"><value>${datasource.url}</value></property>
+		<property name="username"><value>${datasource.username}</value></property>
+		<property name="password"><value>${datasource.password}</value></property>
+		<property name="initialSize"><value>${druid.initialSize}</value></property>
+		<property name="minIdle"><value>${druid.minIdle}</value></property>
+		<property name="maxActive"><value>${druid.maxActive}</value></property>
+		<property name="maxWait"><value>${druid.maxWait}</value></property>
+		<property name="timeBetweenEvictionRunsMillis"><value>${druid.timeBetweenEvictionRunsMillis}</value></property>
+		<property name="minEvictableIdleTimeMillis"><value>${druid.minEvictableIdleTimeMillis}</value></property>
+		<property name="testWhileIdle"><value>${druid.testWhileIdle}</value></property>
+		<property name="testOnBorrow"><value>${druid.testOnBorrow}</value></property>
+		<property name="testOnReturn"><value>${druid.testOnReturn}</value></property>
+		<property name="poolPreparedStatements"><value>${druid.poolPreparedStatements}</value></property>
+		<property name="maxPoolPreparedStatementPerConnectionSize"><value>${druid.maxPoolPreparedStatementPerConnectionSize}</value></property>
+		<property name="removeAbandoned"><value>${druid.removeAbandoned}</value></property>
+		<property name="removeAbandonedTimeout"><value>${druid.removeAbandonedTimeout}</value></property>
+		<property name="logAbandoned"><value>${druid.logAbandoned}</value></property>
+	</bean>
+
+    <!-- jdbc template -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	
+<!--Hibernate SessionFatory-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.work.**.model" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="jdbc.batch_size">${jdbc.batch_size}</prop>
+                <prop key="jdbc.fetch_size">${jdbc.fetch_size}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+                <prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">${hibernate.cache.provider_configuration_file_resource_path}</prop>
+            </props>
+        </property>
+    </bean>
+
+
+<!--Hibernate TransactionManager-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <!-- baseTxService -->
+    <bean id="baseTxService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+        <property name="transactionManager" ref="transactionManager" />
+        <!-- 设置proxyTargetClass为true,则利用cglib代理实体类 -->
+        <property name="proxyTargetClass" value="true" />
+        <property name="transactionAttributes">
+            <props>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="is*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="page*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="add*">PROPAGATION_REQUIRED</prop>
+                <prop key="create*">PROPAGATION_REQUIRED</prop>
+                <prop key="insert*">PROPAGATION_REQUIRED</prop>
+                <prop key="update*">PROPAGATION_REQUIRED</prop>
+                <prop key="remove*">PROPAGATION_REQUIRED</prop>
+                <prop key="del*">PROPAGATION_REQUIRED</prop>                
+                <prop key="change*">PROPAGATION_REQUIRED</prop>
+                <prop key="apply*">PROPAGATION_REQUIRED</prop>
+                <prop key="flush*">PROPAGATION_NEVER</prop>
+                <prop key="make*">PROPAGATION_NOT_SUPPORTED</prop>
+                <prop key="writeLog">PROPAGATION_REQUIRES_NEW</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

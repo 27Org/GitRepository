@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+ 	<bean id="cANManager" parent="baseTxService">
+        <property name="target">
+            <bean class="com.work.manager.CANManager" autowire="byName" />
+        </property>
+    </bean>
+    <bean id="canMessageManager" parent="baseTxService">
+        <property name="target">
+            <bean class="com.work.manager.CanMessageManager" autowire="byName" />
+        </property>
+    </bean>
+    <bean id="canSignalManager" parent="baseTxService">
+        <property name="target">
+            <bean class="com.work.manager.CanSignalManager" autowire="byName" />
+        </property>
+    </bean>
+    <bean id="canToolMsgManager" parent="baseTxService">
+        <property name="target">
+            <bean class="com.work.manager.CanToolMsgManager" autowire="byName" />
+        </property>
+    </bean>
+    <bean id="cOMSettingsManager" parent="baseTxService">
+        <property name="target">
+            <bean class="com.work.manager.COMSettingsManager" autowire="byName" />
+        </property>
+    </bean>
+    <bean id="cantoolSettingsManager" parent="baseTxService">
+        <property name="target">
+            <bean class="com.work.manager.CantoolSettingsManager" autowire="byName" />
+        </property>
+    </bean>
+</beans>

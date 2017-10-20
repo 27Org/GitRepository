@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- web spring请求配置，这里的请求结尾只能是.action -->
+<beans>
+    <!-- Multi-Action 用来标识method的变量名定义 -->
+    <bean id="methodNameResolver"
+    class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+        <property name="paramName" value="method" />
+        <property name="defaultMethodName" value="index" />
+    </bean>
+    <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <value>
+				/canMessage.do=canMessageController
+				/canSignal.do=canSignalController
+				/cOMSettings.do=cOMSettingsController
+				/cantoolSettings.do=cantoolSettingsController
+				/cAN.do=cANController
+				/canToolMsg.do=canToolMsgController
+            </value>
+        </property>
+    </bean>
+
+    <bean name="canMessageController" class="com.work.web.CanMessageController" autowire="byName"/>
+    <bean name="canSignalController" class="com.work.web.CanSignalController" autowire="byName"/>
+    <bean name="cOMSettingsController" class="com.work.web.COMSettingsController" autowire="byName"/>
+    <bean name="cantoolSettingsController" class="com.work.web.CantoolSettingsController" autowire="byName"/>
+    <bean name="cANController" class="com.work.web.CANController" autowire="byName"/>
+    <bean name="canToolMsgController" class="com.work.web.CanToolMsgController" autowire="byName"/>
+</beans>

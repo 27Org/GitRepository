@@ -1,0 +1,82 @@
+[					
+		   {
+        		"text":"CanToolApp",
+        		"iconCls": "x-fa fa-stack-overflow",
+        	    "expanded": true,
+        	    "children": [
+        	    {
+    	    		"id":"CanDataBase",
+	                "text": "CanDataBase",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.canDataBase.List",
+	                "leaf": true
+    	    	},
+    	    	{
+    	    		"id":"COMSettings",
+	                "text": "COMSettings",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.cOMSettings.Edit",
+	                "leaf": true
+    	    	},
+    	    	{
+    	    		"id":"CanToolSettings",
+	                "text": "CanToolSettings",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.cantoolSettings.Edit",
+	                "leaf": true
+    	    	},
+    	    	{
+    	    		"id":"ReceivedCANMessage",
+	                "text": "Received CAN Message",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.rCanBo.List",
+	                "leaf": true
+    	    	},
+    	    	{
+    	    		"id":"ReceivedCANSignal",
+	                "text": "Received CAN Signal",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.rCanBo.List",
+	                "leaf": true
+    	    	}]
+        	},
+        	{
+        		"text":"CanTool",
+        		"iconCls": "x-fa fa-stack-overflow",
+        	    "expanded": true,
+        	    "children": [{
+    	    		"id":"CanToolMsg",
+	                "text": "CanToolMsg",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.canToolMsg.List",
+	                "leaf": true
+    	    	},
+    	    	{
+    	    		"id":"COMSettings2",
+	                "text": "COMSettings",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.cOMSettings2.Edit",
+	                "leaf": true
+    	    	}]
+        	},
+        	{
+        		"text":"CAN",
+        		"iconCls": "x-fa fa-stack-overflow",
+        	    "expanded": true,
+        	    "children": [
+    	    	{
+    	    		"id":"SendCAN",
+	                "text": "SendCAN",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.cAN.List",
+	                "leaf": true
+    	    	},
+    	    	{
+    	    		"id":"ReceiveCAN",
+	                "text": "ReceiveCAN",
+	                "iconCls": "x-fa fa-calendar",
+	                "dataUrl":"app.view.cAN.List2",
+	                "leaf": true
+    	    	}]
+        	}
+]
