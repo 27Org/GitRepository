@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>jq实现led数字效果</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/raphael.js"></script>
+<script type="text/javascript" src="js/jquery.uled.js"></script>
+<style>
+body {background:url(images/bg.gif) repeat; margin:0; padding:0;}
+.title {background-color:rgba(0,0,0,0.56); text-align:center; width:100%; position:fixed; top:0; left:0; padding:5px 0; z-index:99999;}
+.title a {color:#FFF; text-decoration:none; font-size:16px; font-weight:bolder; line-height:24px;}
+#wrapper {width:500px; margin:54px auto; background: none repeat scroll 0 0 #FFF; border-radius: 5px 5px 5px 5px; padding:30px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);}
+.autosize {font-size:0; background: #000; display: table;}
+</style>
+
+</head>
+<body>
+<div id="wrapper">
+  <div>
+    <div>
+      <div id="led1" class="autosize" style="background:#333"></div>
+      <script type="text/javascript">
+		$(document).ready(function() {
+			$('.changeSpeedometer').click(function(){
+// 				console.log(l1 == undefined);
+// 				var l1;
+// 				if(l1 != undefined){
+// 					l1 = undefined;
+// 				}
+				var num = $('#led').val();
+				var l1 = new uLED({
+					id : "led1",
+					type : "random",
+					length : 7,
+					color : "#af0",
+					bgcolor : "#101a10",
+					size : 10,
+					rounded : 6
+				},num);
+			});
+		});
+	</script> 
+    </div>
+  </div>
+<button class="changeSpeedometer">get phy</button>
+<input type="text" id="led" style="display:none">
+</input>
+</div>
+</body>
+</html>
