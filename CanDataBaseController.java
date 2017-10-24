@@ -210,6 +210,9 @@ public class CanDataBaseController extends BaseManageController{
 		
 		//4--
 		
+		
+		
+		
 		//BO_ SG_显示格式设定
 		CanDataBase cdba;
 		List<CanDataBase> cdbaList = new ArrayList<CanDataBase>();
